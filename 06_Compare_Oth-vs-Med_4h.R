@@ -9,7 +9,7 @@ AllIntronGenes <- read_csv(file=paste("./InOutFiles/", Date,"_AllIntronGenes.csv
 OtherIntronGenes <- read_csv(file=paste("./InOutFiles/", Date,"_OtherIntronGenes.csv",sep=""))
 MediatorGenes <- read_csv(file=paste("./InOutFiles/", Date,"_MediatorGenes.csv",sep=""))
 
-Annotation <- read_csv(file=paste("./InOutFiles/", Date,"_Annotation.csv",sep=""))
+Annotation <- read_csv(file=paste("./InOutFiles/20221001_Annotation.csv",sep=""))
 
 #Set saved image to 1 in smaller than A4  	(8.27x11.69
 #png(file=paste("./Outpng/", Date,"_mut-vs-Wt_4h.png",sep=""), width=10.69, height=7.27, units="in", res=100)

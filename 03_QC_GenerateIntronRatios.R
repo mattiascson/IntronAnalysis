@@ -12,7 +12,7 @@ Date <- gsub("-","",Sys.Date())
 
 #Read infiles
 #Read annotation
-Annotation <- read_csv(file=paste("./InOutFiles/" ,Date, "_Annotation.csv",sep=""))
+Annotation <- read_csv(file=paste("./InOutFiles/20221001_Annotation.csv",sep=""))
 #Read batch file. This file was not 100% correct manually corrected it.
 PrepClust <- read_csv("./InFiles/SF-2245_clusters (003).csv") %>% select(Sample,Cluster)
 #Intronfiles
