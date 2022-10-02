@@ -1,11 +1,11 @@
 library(tidyverse)
 library(magrittr)
 
-#Set save QC files YesQC/YesQCDebatch/NoQC
-SaveQC <- "YesQC" 
+#Set save QC files 
+SaveQC <- "Yes" 
 
-#Set save out files Debatch/NoDebatch/None
-SaveOutFiles <- "NoDebatch"
+#Set save out files 
+SaveOutFiles <- "Yes"
 
 #Set Date
 Date <- gsub("-","",Sys.Date())
@@ -90,7 +90,7 @@ PrepClust %<>% slice(match(names(GeneTibble[,3:(NOSamples+2)]),PrepClust[["Sampl
 ReadsP50 <- apply(as.matrix(ExonTibble[,seq(3,(NOSamples+2))]>50),1,all)&apply(as.matrix(GeneTibble[,seq(3,(NOSamples+2))]>50),1,all)
 length(which(ReadsP50))
 Plus50CountGenes <- ExonTibble %>% filter(ReadsP50) %>% select("GeneID") %>% left_join(Annotation)
-if(SaveQC == "YesQC")
+if(SaveQC == "Yes")
 {
 write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenes.csv",sep=""))
 }
@@ -122,7 +122,7 @@ LogiocIntronCounts <- IntronCountsTibble %>% select(!GeneID) %>% .[,]<(-2)
 length(which(apply(LogiocIntronCounts,1,any)))
 LogiocIntronCountsVec <- apply(LogiocIntronCounts,1,any)
 NegIntronCountsTibble <- IntronCountsTibble  %>% left_join(Annotation) %>% relocate(GeneName, .after = GeneID) %>% filter(LogiocIntronCountsVec)
-if(SaveQC == "YesQC")
+if(SaveQC == "Yes")
 {
 write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenes.csv",sep=""))
 }
@@ -160,7 +160,7 @@ hist(ACT1SpliceRatio, main = "YFL039C ACT1 ", xlab = "Spliceratio distribution 4
 plot(ACT1Counts,ACT1SpliceRatio, col = PrepClust[["Cluster"]], main = "ACT1 spliceratio and counts 480 samples", xlab = "Samples ACT1 Genecounts")
 legend("bottomright", legend = c("Clust 1 low <3%", "Clust 2 high >19%"), text.col = c("black","red"), title = "By batch rRNA content")
 
-if(SaveOutFiles == "NoDebatch")
+if(SaveOutFiles == "Yes")
 {
   write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenes.csv",sep=""))
   write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenes.csv",sep=""))
@@ -251,9 +251,9 @@ GeneTibble <- tibble(GeneTibble[,1:2],as_tibble(Temp2))
 ReadsP50 <- apply(as.matrix(ExonTibble[,seq(3,(NOSamples+2))]>50),1,all)&apply(as.matrix(GeneTibble[,seq(3,(NOSamples+2))]>50),1,all)
 length(which(ReadsP50))
 Plus50CountGenes <- ExonTibble %>% filter(ReadsP50) %>% select("GeneID") %>% left_join(Annotation)
-if(SaveQC == "YesQCDebatch")
+if(SaveQC == "Yes")
 {
-write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenes.csv",sep=""))
+write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenesDebatch.csv",sep=""))
 }
 
 #Ratio by intron counts
@@ -283,9 +283,9 @@ LogiocIntronCounts <- IntronCountsTibble %>% select(!GeneID) %>% .[,]<(-2)
 length(which(apply(LogiocIntronCounts,1,any)))
 LogiocIntronCountsVec <- apply(LogiocIntronCounts,1,any)
 NegIntronCountsTibble <- IntronCountsTibble  %>% left_join(Annotation) %>% relocate(GeneName, .after = GeneID) %>% filter(LogiocIntronCountsVec)
-if(SaveQC == "YesQCDebatch")
+if(SaveQC == "Yes")
 {
-write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenes.csv",sep=""))
+write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenesDebatch.csv",sep=""))
 }
 
 #Does not keep order but not necessary
@@ -321,10 +321,10 @@ hist(ACT1SpliceRatio, main = "YFL039C ACT1 ", xlab = "Spliceratio distribution 4
 plot(ACT1Counts,ACT1SpliceRatio, col = PrepClust[["Cluster"]], main = "ACT1 spliceratio and counts 480 samples", xlab = "Samples ACT1 Genecounts")
 legend("bottomright", legend = c("Clust 1 low <3%", "Clust 2 high >19%"), text.col = c("black","red"), title = "By batch rRNA content")
 
-if(SaveOutFiles == "Debatch")
+if(SaveOutFiles == "Yes")
 {
-write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenes.csv",sep=""))
-write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenes.csv",sep=""))
-write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenes.csv",sep=""))
+write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
+write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
+write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
 }
 dev.off()
