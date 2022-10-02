@@ -1,3 +1,13 @@
+# Project specific if CountFiles is a symlink remove the trailing /
+/InFiles/CountFilesMini/
+/InFiles/CountFiles
+/InFiles/20220900_IntronGenes.csv
+/OutFiles/
+/Outpng/
+/Outcsv/
+/InOutFiles/
+IntronAnalysis.Rproj
+
 # History files
 .Rhistory
 .Rapp.history
