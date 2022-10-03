@@ -1,0 +1,46 @@
+---
+title: Splice ratio comparison for mediator associated and other intron genes.
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Mattias Carlsson
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: true
+    number_sections: FALSE
+    df_print: kable
+mainfont: "Liberation Sans"
+monofont: "Liberation Mono"
+geometry: a3paper, margin=20mm, landscape
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_file = 
+  paste("OutFiles/", format(Sys.time(), '%Y%m%d'),"_",fs::path_ext_remove(basename(inputFile)),".pdf",sep="")
+  ) })
+---
+\newpage
+# Summary
+Requires run of 03_QC_GenerateIntronRatios.R to generate infiles.
+
+In debatched results, data was debatched using combat-seq from sva using all 480 samples and two batches defined by rRNA content.
+
+Each datapoint in boxplots is an hexaplicate average. 
+\newpage
+
+# 0h timepoint
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7 ,cache=TRUE}
+source(file = "06_Compare_Oth-vs-Med_0h.R")
+```
+\newpage
+# 2h timepoint
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7 ,cache=TRUE}
+source(file = "06_Compare_Oth-vs-Med_2h.R")
+```
+\newpage
+# 4h timepoint
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7 ,cache=TRUE}
+source(file = "06_Compare_Oth-vs-Med_4h.R")
+```
+\newpage
+# 6h timepoint
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7 ,cache=TRUE}
+source(file = "06_Compare_Oth-vs-Med_6h.R")
+```
