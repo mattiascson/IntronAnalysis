@@ -37,6 +37,7 @@ MeanOther <- signif(mean(WtOthRelExon[["Mean"]]),2)
 nOther<- dim(WtOthRelExon)[1]
 MediatorOther <- signif(t.test(WtOthRelExon[["Mean"]],WtMedRelExon[["Mean"]], alternative = "two.sided", var.equal = FALSE)$p.value, 2)
 boxplot(WtOthRelExon[["Mean"]],WtMedRelExon[["Mean"]], main=paste("SpliceRatio Wt 30C 2h. t.test pval", MediatorOther), names=c(paste(nOther, "Other u", MeanOther),paste(nMediator, " Mediator u", MeanMediator)))
+pValues <- c(pValues,MediatorOther)
 
 
 #####med9
@@ -55,6 +56,8 @@ MeanOther <- signif(mean(med9OthRelExon[["Mean"]]),2)
 nOther<- dim(WtOthRelExon)[1]
 MediatorOther <- signif(t.test(med9OthRelExon[["Mean"]],med9MedRelExon[["Mean"]], alternative = "two.sided", var.equal = FALSE)$p.value, 2)
 boxplot(med9OthRelExon[["Mean"]],med9MedRelExon[["Mean"]], main=paste("SpliceRatio med9 30C 2h. t.test pval", MediatorOther), names=c(paste(nOther, "Other u", MeanOther),paste(nMediator,"Mediator u", MeanMediator)))
+pValues <- c(pValues,MediatorOther)
+
 
 #####cdk8
 ###Check Mediator intron genes.
@@ -72,6 +75,8 @@ MeanOther <- signif(mean(cdk8OthRelExon[["Mean"]]),2)
 nOther<- dim(WtOthRelExon)[1]
 MediatorOther <- signif(t.test(cdk8OthRelExon[["Mean"]],cdk8MedRelExon[["Mean"]], alternative = "two.sided", var.equal = FALSE)$p.value, 2)
 boxplot(cdk8OthRelExon[["Mean"]],cdk8MedRelExon[["Mean"]], main=paste("SpliceRatio cdk8 30C 2h. t.test pval", MediatorOther), names=c(paste(nOther, "Other u", MeanOther),paste(nMediator,"Mediator u", MeanMediator)))
+pValues <- c(pValues,MediatorOther)
+
 
 #####med16
 ###Check Mediator intron genes.
@@ -89,6 +94,8 @@ MeanOther <- signif(mean(med16OthRelExon[["Mean"]]),2)
 nOther<- dim(WtOthRelExon)[1]
 MediatorOther <- signif(t.test(med16OthRelExon[["Mean"]],med16MedRelExon[["Mean"]], alternative = "two.sided", var.equal = FALSE)$p.value, 2)
 boxplot(med16OthRelExon[["Mean"]],med16MedRelExon[["Mean"]], main=paste("SpliceRatio med16 30C 2h. t.test pval", MediatorOther), names=c(paste(nOther, "Other u", MeanOther),paste(nMediator,"Mediator u", MeanMediator)))
+pValues <- c(pValues,MediatorOther)
+
 
 #####med18
 ###Check Mediator intron genes.
@@ -106,6 +113,6 @@ MeanOther <- signif(mean(med18OthRelExon[["Mean"]]),2)
 nOther<- dim(WtOthRelExon)[1]
 MediatorOther <- signif(t.test(med18OthRelExon[["Mean"]],med18MedRelExon[["Mean"]], alternative = "two.sided", var.equal = FALSE)$p.value, 2)
 boxplot(med18OthRelExon[["Mean"]],med18MedRelExon[["Mean"]], main=paste("SpliceRatio med18 30C 2h. t.test pval", MediatorOther), names=c(paste(nOther, "Other u", MeanOther),paste(nMediator,"Mediator u", MeanMediator)))
-
+pValues <- c(pValues,MediatorOther)
 
 
