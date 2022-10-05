@@ -2,10 +2,10 @@ library(tidyverse)
 library(magrittr)
 
 #Set save QC files 
-SaveQC <- "No" 
+SaveQC <- "Yes" 
 
 #Set save out files 
-SaveOutFiles <- "No"
+SaveOutFiles <- "Yes"
 
 #Set Date
 Date <- gsub("-","",Sys.Date())
@@ -267,3 +267,7 @@ if(SaveOutFiles == "Yes")
   write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
   write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
 }
+Plot<-recordPlot()
+png(file=paste("./Outpng/", Date,"_Spliceratio-ACT1.png",sep=""), width=11.69, height=7.27, units="in", res=100)
+replayPlot(Plot)
+dev.off()
