@@ -2,10 +2,10 @@ library(tidyverse)
 library(magrittr)
 
 #Set save QC files 
-SaveQC <- "Yes" 
+SaveQC <- "No" 
 
 #Set save out files 
-SaveOutFiles <- "Yes"
+SaveOutFiles <- "No"
 
 #Set Date
 Date <- gsub("-","",Sys.Date())
@@ -18,9 +18,6 @@ PrepClust <- read_csv("./InFiles/SF-2245_clusters (003).csv") %>% select(Sample,
 #Intronfiles
 SGDIntronGenes <- read_tsv("./InFiles/20220914_SGD_Introns.tsv", col_names = FALSE)
 IntronGenesStd <- read_tsv("./InFiles/20220900_IntronGenes.csv")
-
-#Set saved image to 1 in smaller than A4  	(8.27x11.69
-png(file=paste("./Outpng/", Date,"_Spliceratio-ACT1.png",sep=""), width=10.69, height=7.27, units="in", res=100)
 
 #Set to 2x2 combiplot
 par(mfrow=c(2,2))
@@ -168,63 +165,6 @@ if(SaveOutFiles == "Yes")
 }
 
 #### Debatch
-ExonFiles <- list.files("./InFiles/CountFiles","exon") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("./InFiles/CountFiles/",.,sep="")
-GeneFiles <- list.files("./InFiles/CountFiles","gene") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("./InFiles/CountFiles/",.,sep="")
-
-#Number of genes 7127
-ExonTibble <- tibble(.rows = 7127)
-Samplenames <- vector(mode = "character")
-loopstart <- 1
-for (ExonFile in ExonFiles)
-{
-  if(loopstart == 1)
-  {
-    loopstart <- 0
-    ExonTable<-read_tsv(ExonFile,skip=1)
-    ExonTibble %<>% add_column(GeneID = ExonTable[["Geneid"]], Length = ExonTable[["Length"]])
-  }
-  ExonTable<-read_tsv(ExonFile,skip=1)
-  Samplename<-substr(ExonFile,22,nchar(ExonFile)-15)
-  Samplenames <- c(Samplenames,Samplename)
-  ExonTable %<>% select(Geneid, contains("bam")) %>% rename(GeneID = Geneid,  !!Samplename := contains("bam"))
-  #Extra security
-  if(all(ExonTibble[["GeneID"]]==ExonTable[["GeneID"]]))
-  {
-    ExonTibble %<>% left_join(ExonTable)
-  } else
-  {
-    Print("Break")
-    break()
-  }
-}
-
-GeneTibble <- tibble(.rows = 7127)
-loopstart <- 1
-for (GeneFile in GeneFiles)
-{
-  if(loopstart == 1)
-  {
-    loopstart <- 0
-    GeneTable<-read_tsv(GeneFile,skip=1)
-    GeneTibble %<>% add_column(GeneID = GeneTable[["Geneid"]], Length = GeneTable[["Length"]])
-  }
-  GeneTable<-read_tsv(GeneFile,skip=1)
-  Samplename<-substr(GeneFile,22,nchar(GeneFile)-15)
-  GeneTable %<>% select(Geneid, contains("bam")) %>% rename(GeneID = Geneid,  !!Samplename := contains("bam"))
-  #Extra security
-  if(all(GeneTibble[["GeneID"]]==GeneTable[["GeneID"]]))
-  {
-    GeneTibble %<>% left_join(GeneTable)
-  } else
-  {
-    Print("Break")
-    break()
-  }
-}
-
-#Assign samples in rRNA batch. 1 low rRNA 197. 2 high rRNA 283
-PrepClust %<>% slice(match(names(GeneTibble[,3:(NOSamples+2)]),PrepClust[["Sample"]]))
-
 #Run Combat debatch without filtering any genes on ExonTiibble and GeneTibble
 library("edgeR")
 library("sva")
@@ -253,7 +193,7 @@ length(which(ReadsP50))
 Plus50CountGenes <- ExonTibble %>% filter(ReadsP50) %>% select("GeneID") %>% left_join(Annotation)
 if(SaveQC == "Yes")
 {
-write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenesDebatch.csv",sep=""))
+  write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenesDebatch.csv",sep=""))
 }
 
 #Ratio by intron counts
@@ -285,7 +225,7 @@ LogiocIntronCountsVec <- apply(LogiocIntronCounts,1,any)
 NegIntronCountsTibble <- IntronCountsTibble  %>% left_join(Annotation) %>% relocate(GeneName, .after = GeneID) %>% filter(LogiocIntronCountsVec)
 if(SaveQC == "Yes")
 {
-write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenesDebatch.csv",sep=""))
+  write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenesDebatch.csv",sep=""))
 }
 
 #Does not keep order but not necessary
@@ -323,8 +263,7 @@ legend("bottomright", legend = c("Clust 1 low <3%", "Clust 2 high >19%"), text.c
 
 if(SaveOutFiles == "Yes")
 {
-write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
-write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
-write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
+  write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
+  write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
+  write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
 }
-dev.off()

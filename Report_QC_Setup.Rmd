@@ -1,0 +1,77 @@
+---
+title: QC, filtering and batch effects
+subtitle: Using all 480 samples.
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Mattias Carlsson
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: true
+    number_sections: FALSE
+    df_print: kable
+mainfont: "Liberation Sans"
+monofont: "Liberation Mono"
+geometry: a3paper, margin=20mm, landscape
+fontsize: 12pt
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_file = 
+  paste("OutFiles/", format(Sys.time(), '%Y%m%d'),"_",fs::path_ext_remove(basename(inputFile)),".pdf",sep="")
+  ) })
+---
+
+\newpage
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, cache = TRUE}
+source(file = "01_QC_Lengthcomparison.R", local = knitr::knit_global())
+```
+
+# Preprocessing and quality check
+
+Count files for each sample were generated from bam-files from Scilife with the featurecounts in the Linux subread package.\
+Featurecounts was run using Saccharomyces_cerevisiae.R64-1-1.106.gtf with either "exon" or "gene" as --t parameter to generate counts over exons or counts over whole gene respectively.\
+There are 7127 genes in the gtf-file and a annotation file is created using org.Sc.sgd.db in script 02_CreateAnnotation.R and saved as Annotation.csv.\
+In the annotation file and in tibbles and csv-files gene standard name is GeneName and gene systematic name is GeneID In 01_Lengthcomparison.R gene and exon lengths and gene-order were safety-checked to be identical for all samples. Gene length is checked and is never shorter than exon length.\
+File: QC_GenerateIntronRatios.R Genes with more than 50 counts in all samples. Out of 7127 genes to 4777 remains in Plus50CountGenes.csv
+
+Genes that have less than -2 Gene minus Exon counts in any sample are in NegCountsGenes.csv. Since Gene counts should be greater of equal to Exon counts this could be an artifact of featurecounts, especially since Gene lengths are always longer or equal to Exon lengths 1276 Genes has less than 0 Gene minus Exon counts in some sample 166 Genes has less than -1 Gene minus Exon counts in some sample 62 Genes has less than -2 Gene minus Exon counts in some sample
+
+SGD provides a set of 285 intron containing genes via Yeastmine template search: 20220914_SGD_Introns.tsv. The set of intron genes defined as genes with total gene length is longer than total exon length Intron length no. genes Any 348 intersect 280 SGD 30 311 intersect 280 SGD 50 285 intersect 278 SGD Lacking "YIL111W" "YJL041W" "YMR147W" "YMR242C" "YOR312C". Have same length and count in this data "YOR312C" "YMR242C" are in the mediator 67 gene list.
+
+# Filtering and calculation of splice ratio
+
+## How final filtering is done.
+
+Number of genes from a run with no batch correction: If ComBat-seq is applied to debatch two batches, it is done using 480 samples and all 7127 genes for both Gene and Exon counts.
+
+Splice ratio calculations are done keeping all genes 7127 but setting negative Gene - Exon counts = Intron counts to zero.
+
+All intron genes are defined as genes 30bp longer than total exon length, 311, which intersect with SGD list of 285. Total 280.
+
+All intron genes filtered to keep genes that had more than 50 counts in all samples. Total 217.
+
+Filter away intron genes that had any less than -2 Intron count 0. Total 216.
+
+Filter away intron genes with 100% splicing in all samples 3. Total 216
+
+Which genes from the mediator intron list are not found among all 218 intron genes? "YOR312C" "YMR242C"
+
+YOR312C YMR242C are removed. The 216 intron genes are split to 65 mediator and 151 other. This can differ in a batch corrected run. Saved as AllIntronGenes.csv, OtherIntronGenes.csv and MediatorGenes.csv
+
+## How Splice ratio calculation is done.
+
+The "over intron counts" per gene is the difference "over gene counts" minus "over exon counts". Intron length is gene length minus exon length.
+
+The exon counts density per gene were calculated as "over exon counts" / (exon length \* exon total sample counts). Exon count density is considered the sum of both unspliced and spliced mRNA.
+
+The intron count density were calculated as "over intron counts" / (intron length \* gene total sample counts). Intron count density is considered to represent unspliced mRNA.
+
+The proxy for splice ratio is: (exon count density- intron count density) / exon count density.
+
+Splice ratios are either directly t.test:ed per gene as in csv-files, or averaged per gene over replicates and subtracted between conditions/genotypes in different sets of intron genes, to produce the boxplots in images with t.test p-values.
+
+# Results Batch analysis Act1
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7, cache = TRUE}
+source(file = "03_QC_GenerateIntronRatios.R", local = knitr::knit_global())
+
+```
