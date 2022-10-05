@@ -1,0 +1,125 @@
+---
+title: Splice ratio comparison between Wt and all med mutants for all intron genes.
+subtitle: At 30C for all 0h 2h 4h and 6h time points.
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Mattias Carlsson
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: true
+    number_sections: FALSE
+    df_print: kable
+mainfont: "Liberation Sans"
+monofont: "Liberation Mono"
+geometry: a3paper, margin=20mm, landscape
+fontsize: 12pt
+linestretch: 1.5
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_file = 
+  paste("OutFiles/", format(Sys.time(), '%Y%m%d'),"_",fs::path_ext_remove(basename(inputFile)),".pdf",sep="")
+  ) })
+---
+
+\newpage
+
+# Summary
+
+-   Method
+    -   Requires run of 03_QC_GenerateIntronRatios.R or Report_QC_Setup.Rmd to generate infiles. This script also filter away genes for e.g. low counts which can make the number of genes differ between debatched and non-debatched results.
+    -   In debatched results, data was debatched using combat-seq from sva using all 480 samples and two batches defined by rRNA content.
+    -   Each data point in box plots is an hexaplicate average. The 0h time point uses 0h stress condition (unstressed) data which makes it 24-plicate.
+    -   Batch correction is expected to have effect on results since the different samples are used within each t-test.
+    -   The splice ratios are not normally distributed but due to large sample sizes t-test is assumed to be acceptable.
+-   Results
+    -   Splice ratios are compared between genotypes at 30C at different time points presented as boxplots.
+    -   The first number under each boxplot is the number of genes, second number is splice ratio average.
+    -   asdasd
+    -   Corrected p-Values for multiple testing are in Table.1.
+
+\newpage
+
+# 0h timepoint
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_0h.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 0h timepoint debatch
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_0h_Debatch.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 2h timepoint
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_2h.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 2h timepoint debatch
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_2h_Debatch.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 4h timepoint
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_4h.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 4h timepoint debatch
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_4h_Debatch.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 6h timepoint
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_6h.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# 6h timepoint debatch
+
+```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
+source(file = "07_Compare_All_Wt-vs-med_6h_Debatch.R", local = knitr::knit_global())
+```
+
+\newpage
+
+# Corrected p-values with holm-method
+
+\setstretch{1}
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+#Generates combination names
+GenTimeBatch <- vector(mode = "character")
+for(Time in c("0h","2h","4h","6h"))
+{
+  for(Batch in c("NoDebatch","Debatch"))
+  {
+    for(Gene in c("med9","cdk8","med16","med18"))
+    {
+      GenTimeBatch <- c(GenTimeBatch, paste0("WT-vs-",Gene,Time,Batch,collapse = ""))
+    }
+  }
+}
+pAdjusted <- signif(p.adjust(pValues, method = "holm"),2)
+pValTibble <- tibble(GenTimeBatch,pValues,pAdjusted)
+knitr::kable(pValTibble, caption = "From boxplots",digits =12, format.args = list(scientific = TRUE))
+```
