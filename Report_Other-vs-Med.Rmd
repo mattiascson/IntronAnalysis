@@ -33,8 +33,8 @@ knit: (function(inputFile, encoding) {
 -   Results
     -   Splice ratios are compared within each genotype at 30C at different time points presented as boxplots.
     -   The first number under each boxplot is the number of genes, second number is splice ratio average.
-    -   There is generally a small few % difference between mediator and other intron genes average splice ratios at all time points and in all genotypes.
-    -   Corrected p-Values for multiple testing are in Table.1 and, but lesser difference (p-value \> 0.05) in med16 and med18 at 6h.
+    -   The mediator associated genes generally have a few percent higher average splice ratios than other mediator genes at all time points and in all genotypes. Lesser difference (p-value > 0.05) in med16 and med18 at 6h.
+    -   Corrected p-Values for multiple testing are in Table.1.
 
 \newpage
 

@@ -1,5 +1,5 @@
 ---
-title: Splice ratio comparison between Wt and all med mutants for all intron genes.
+title: Splice ratio comparison between Wt and all med mutants for mediator associated intron genes.
 subtitle: At 30C for all 0h 2h 4h and 6h time points.
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 author: Mattias Carlsson
@@ -33,7 +33,7 @@ knit: (function(inputFile, encoding) {
 -   Results
     -   Splice ratios are compared between genotypes at 30C at different time points presented as boxplots.
     -   The first number under each boxplot is the number of genes, second number is splice ratio average.
-    -   The semi-general pattern is that med9 and cdk8 have some percent higher splice ratio than Wt, and med16 and med18 equal or lower, if one takes into account that results have to have the same trend between debatched and non-debatched to be considered significant. This seems to apply looking at either mediator associated, other or all mediator genes, at all time points.
+    -   The semi-general pattern is that med9 and cdk8 have some percent higher splice ratio then Wt, and med16 and med18 equal or lower, if one takes into account that results have to have the same trend between debatched and non-debatched to be considered significant. This seems to apply looking at either mediator associated, other or all mediator genes, at all time points.
     -   Corrected p-Values for multiple testing are in Table.1.
 
 \newpage
@@ -41,7 +41,7 @@ knit: (function(inputFile, encoding) {
 # 0h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_0h.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_0h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -49,7 +49,7 @@ source(file = "07_Compare_All_Wt-vs-med_0h.R", local = knitr::knit_global())
 # 0h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_0h_Debatch.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_0h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -57,7 +57,7 @@ source(file = "07_Compare_All_Wt-vs-med_0h_Debatch.R", local = knitr::knit_globa
 # 2h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_2h.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_2h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -65,7 +65,7 @@ source(file = "07_Compare_All_Wt-vs-med_2h.R", local = knitr::knit_global())
 # 2h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_2h_Debatch.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_2h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -73,7 +73,7 @@ source(file = "07_Compare_All_Wt-vs-med_2h_Debatch.R", local = knitr::knit_globa
 # 4h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_4h.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_4h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -81,7 +81,7 @@ source(file = "07_Compare_All_Wt-vs-med_4h.R", local = knitr::knit_global())
 # 4h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_4h_Debatch.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_4h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -89,7 +89,7 @@ source(file = "07_Compare_All_Wt-vs-med_4h_Debatch.R", local = knitr::knit_globa
 # 6h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_6h.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_6h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -97,7 +97,7 @@ source(file = "07_Compare_All_Wt-vs-med_6h.R", local = knitr::knit_global())
 # 6h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "07_Compare_All_Wt-vs-med_6h_Debatch.R", local = knitr::knit_global())
+source(file = "08_Compare_Med_Wt-vs-med_6h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
