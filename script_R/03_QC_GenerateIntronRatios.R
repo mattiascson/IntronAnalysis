@@ -12,19 +12,19 @@ Date <- gsub("-","",Sys.Date())
 
 #Read infiles
 #Read annotation
-Annotation <- read_csv(file=paste("./InOutFiles/20221001_Annotation.csv",sep=""))
+Annotation <- read_csv(file=paste("../InOutFiles/20221001_Annotation.csv",sep=""))
 #Read batch file. This file was not 100% correct manually corrected it.
-PrepClust <- read_csv("./InFiles/SF-2245_clusters (003).csv") %>% select(Sample,Cluster)
+PrepClust <- read_csv("../InFiles/SF-2245_clusters (003).csv") %>% select(Sample,Cluster)
 #Intronfiles
-SGDIntronGenes <- read_tsv("./InFiles/20220914_SGD_Introns.tsv", col_names = FALSE)
-IntronGenesStd <- read_tsv("./InFiles/20220900_IntronGenes.csv")
+SGDIntronGenes <- read_tsv("../InFiles/20220914_SGD_Introns.tsv", col_names = FALSE)
+IntronGenesStd <- read_tsv("../InFiles/20220900_IntronGenes.csv")
 
 #Set to 2x2 combiplot
 par(mfrow=c(2,2))
 
 ####No debatch
-ExonFiles <- list.files("./InFiles/CountFiles","exon") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("./InFiles/CountFiles/",.,sep="")
-GeneFiles <- list.files("./InFiles/CountFiles","gene") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("./InFiles/CountFiles/",.,sep="")
+ExonFiles <- list.files("../InFiles/CountFiles","exon") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("../InFiles/CountFiles/",.,sep="")
+GeneFiles <- list.files("../InFiles/CountFiles","gene") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("../InFiles/CountFiles/",.,sep="")
 #Set no of samples
 NOSamples <- length(GeneFiles)
 
@@ -41,7 +41,7 @@ for (ExonFile in ExonFiles)
     ExonTibble %<>% add_column(GeneID = ExonTable[["Geneid"]], Length = ExonTable[["Length"]])
   }
   ExonTable<-read_tsv(ExonFile,skip=1)
-  Samplename<-substr(ExonFile,22,nchar(ExonFile)-15)
+  Samplename<-substr(ExonFile,23,nchar(ExonFile)-15)
   Samplenames <- c(Samplenames,Samplename)
   ExonTable %<>% select(Geneid, contains("bam")) %>% rename(GeneID = Geneid,  !!Samplename := contains("bam"))
   #Extra security
@@ -66,7 +66,7 @@ for (GeneFile in GeneFiles)
     GeneTibble %<>% add_column(GeneID = GeneTable[["Geneid"]], Length = GeneTable[["Length"]])
   }
   GeneTable<-read_tsv(GeneFile,skip=1)
-  Samplename<-substr(GeneFile,22,nchar(GeneFile)-15)
+  Samplename<-substr(GeneFile,23,nchar(GeneFile)-15)
   GeneTable %<>% select(Geneid, contains("bam")) %>% rename(GeneID = Geneid,  !!Samplename := contains("bam"))
   #Extra security
   if(all(GeneTibble[["GeneID"]]==GeneTable[["GeneID"]]))
@@ -89,7 +89,7 @@ length(which(ReadsP50))
 Plus50CountGenes <- ExonTibble %>% filter(ReadsP50) %>% select("GeneID") %>% left_join(Annotation)
 if(SaveQC == "Yes")
 {
-write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenes.csv",sep=""))
+write_csv(Plus50CountGenes, file=paste("../Outcsv/", Date,"_Plus50CountGenes.csv",sep=""))
 }
 
 #Ratio by intron counts
@@ -121,7 +121,7 @@ LogiocIntronCountsVec <- apply(LogiocIntronCounts,1,any)
 NegIntronCountsTibble <- IntronCountsTibble  %>% left_join(Annotation) %>% relocate(GeneName, .after = GeneID) %>% filter(LogiocIntronCountsVec)
 if(SaveQC == "Yes")
 {
-write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenes.csv",sep=""))
+write_csv(NegIntronCountsTibble, file=paste("../Outcsv/", Date,"_NegCountsGenes.csv",sep=""))
 }
 
 #Does not keep order but not necessary
@@ -159,9 +159,9 @@ legend("bottomright", legend = c("Clust 1 low <3%", "Clust 2 high >19%"), text.c
 
 if(SaveOutFiles == "Yes")
 {
-  write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenes.csv",sep=""))
-  write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenes.csv",sep=""))
-  write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenes.csv",sep=""))
+  write_csv(AllIntronGenes, file=paste("../InOutFiles/", Date,"_AllIntronGenes.csv",sep=""))
+  write_csv(OtherIntronGenes, file=paste("../InOutFiles/", Date,"_OtherIntronGenes.csv",sep=""))
+  write_csv(MediatorGenes, file=paste("../InOutFiles/", Date,"_MediatorGenes.csv",sep=""))
 }
 
 #### Debatch
@@ -193,7 +193,7 @@ length(which(ReadsP50))
 Plus50CountGenes <- ExonTibble %>% filter(ReadsP50) %>% select("GeneID") %>% left_join(Annotation)
 if(SaveQC == "Yes")
 {
-  write_csv(Plus50CountGenes, file=paste("./Outcsv/", Date,"_Plus50CountGenesDebatch.csv",sep=""))
+  write_csv(Plus50CountGenes, file=paste("../Outcsv/", Date,"_Plus50CountGenesDebatch.csv",sep=""))
 }
 
 #Ratio by intron counts
@@ -225,7 +225,7 @@ LogiocIntronCountsVec <- apply(LogiocIntronCounts,1,any)
 NegIntronCountsTibble <- IntronCountsTibble  %>% left_join(Annotation) %>% relocate(GeneName, .after = GeneID) %>% filter(LogiocIntronCountsVec)
 if(SaveQC == "Yes")
 {
-  write_csv(NegIntronCountsTibble, file=paste("./Outcsv/", Date,"_NegCountsGenesDebatch.csv",sep=""))
+  write_csv(NegIntronCountsTibble, file=paste("../Outcsv/", Date,"_NegCountsGenesDebatch.csv",sep=""))
 }
 
 #Does not keep order but not necessary
@@ -263,11 +263,11 @@ legend("bottomright", legend = c("Clust 1 low <3%", "Clust 2 high >19%"), text.c
 
 if(SaveOutFiles == "Yes")
 {
-  write_csv(AllIntronGenes, file=paste("./InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
-  write_csv(OtherIntronGenes, file=paste("./InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
-  write_csv(MediatorGenes, file=paste("./InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
+  write_csv(AllIntronGenes, file=paste("../InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
+  write_csv(OtherIntronGenes, file=paste("../InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
+  write_csv(MediatorGenes, file=paste("../InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
 }
 Plot<-recordPlot()
-png(file=paste("./Outpng/", Date,"_Spliceratio-ACT1.png",sep=""), width=11.69, height=7.27, units="in", res=100)
+png(file=paste("../Outpng/", Date,"_Spliceratio-ACT1.png",sep=""), width=11.69, height=7.27, units="in", res=100)
 replayPlot(Plot)
 dev.off()

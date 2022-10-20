@@ -1,7 +1,7 @@
 library(tidyverse)
 library(magrittr)
-ExonFiles <- list.files("./InFiles/CountFiles","exon") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("./InFiles/CountFiles/",.,sep="")
-GeneFiles <- list.files("./InFiles/CountFiles","gene") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("./InFiles/CountFiles/",.,sep="")
+ExonFiles <- list.files("../InFiles/CountFiles","exon") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("../InFiles/CountFiles/",.,sep="")
+GeneFiles <- list.files("../InFiles/CountFiles","gene") %>% grep("summary",.,value = TRUE,invert = TRUE) %>% paste("../InFiles/CountFiles/",.,sep="")
 
 #Number of genes 7127
 ExonTibble <- tibble(.rows = 7127)
