@@ -5,11 +5,11 @@ library(magrittr)
 Date <- gsub("-","",Sys.Date())
 
 #Read files and Date dependent files
-AllIntronGenes <- read_csv(file=paste("./InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
-OtherIntronGenes <- read_csv(file=paste("./InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
-MediatorGenes <- read_csv(file=paste("./InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
+AllIntronGenes <- read_csv(file=paste("../InOutFiles/", Date,"_AllIntronGenesDebatch.csv",sep=""))
+OtherIntronGenes <- read_csv(file=paste("../InOutFiles/", Date,"_OtherIntronGenesDebatch.csv",sep=""))
+MediatorGenes <- read_csv(file=paste("../InOutFiles/", Date,"_MediatorGenesDebatch.csv",sep=""))
 
-Annotation <- read_csv(file=paste("./InOutFiles/20221001_Annotation.csv",sep=""))
+Annotation <- read_csv(file=paste("../InOutFiles/20221001_Annotation.csv",sep=""))
 
 #Set to 2x2 combiplot
 par(mfrow=c(2,2))

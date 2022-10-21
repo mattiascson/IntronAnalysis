@@ -16,7 +16,7 @@ fontsize: 12pt
 linestretch: 1.5
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_file = 
-  paste("OutFiles/", format(Sys.time(), '%Y%m%d'),"_",fs::path_ext_remove(basename(inputFile)),".pdf",sep="")
+  paste("../OutFiles/", format(Sys.time(), '%Y%m%d'),"_",fs::path_ext_remove(basename(inputFile)),".pdf",sep="")
   ) })
 ---
 
@@ -25,7 +25,7 @@ knit: (function(inputFile, encoding) {
 # Summary
 
 -   Method
-    -   Requires run of 03_QC_GenerateIntronRatios.R or Report_QC_Setup.Rmd to generate infiles. This script also filter away genes for e.g. low counts which can make the number of genes differ between debatched and non-debatched results.
+    -   Requires run of 03_QC_GenerateIntronRatios.R or Report_QC_Setup.Rmd to generate infiles. This scriptt also filter away genes for e.g. low counts which can make the number of genes differ between debatched and non-debatched results.
     -   In debatched results, data was debatched using combat-seq from sva using all 480 samples and two batches defined by rRNA content.
     -   Each data point in box plots is an hexaplicate average.
     -   Batch correction is not expected to have a large effect on results since the same samples are used within each t-test.
@@ -41,7 +41,7 @@ knit: (function(inputFile, encoding) {
 # 0h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_0h.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_0h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -49,7 +49,7 @@ source(file = "06_Compare_Oth-vs-Med_0h.R", local = knitr::knit_global())
 # 0h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_0h_Debatch.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_0h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -57,7 +57,7 @@ source(file = "06_Compare_Oth-vs-Med_0h_Debatch.R", local = knitr::knit_global()
 # 2h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_2h.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_2h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -65,7 +65,7 @@ source(file = "06_Compare_Oth-vs-Med_2h.R", local = knitr::knit_global())
 # 2h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_2h_Debatch.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_2h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -73,7 +73,7 @@ source(file = "06_Compare_Oth-vs-Med_2h_Debatch.R", local = knitr::knit_global()
 # 4h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_4h.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_4h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -81,7 +81,7 @@ source(file = "06_Compare_Oth-vs-Med_4h.R", local = knitr::knit_global())
 # 4h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_4h_Debatch.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_4h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -89,7 +89,7 @@ source(file = "06_Compare_Oth-vs-Med_4h_Debatch.R", local = knitr::knit_global()
 # 6h timepoint
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_6h.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_6h.R", local = knitr::knit_global())
 ```
 
 \newpage
@@ -97,7 +97,7 @@ source(file = "06_Compare_Oth-vs-Med_6h.R", local = knitr::knit_global())
 # 6h timepoint debatch
 
 ```{r, echo = FALSE, results = 'hide', warning = FALSE, message = FALSE, fig.align='center', out.width = '100%', fig.width = 12, fig.asp = 0.7}
-source(file = "06_Compare_Oth-vs-Med_6h_Debatch.R", local = knitr::knit_global())
+source(file = "../script_R/06_Compare_Oth-vs-Med_6h_Debatch.R", local = knitr::knit_global())
 ```
 
 \newpage
