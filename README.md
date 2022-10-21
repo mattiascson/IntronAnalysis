@@ -1,9 +1,9 @@
 ## *Saccharomyces cerevisiae* analysis of intron splicing
 
-The scripts are run via R markdown to generate pdf reports.\
-The scripts does minor quality control and compare subsets of intron containing genes within and between experimental conditions.\
+The scripts are run via R Markdown to generate pdf reports.\
+The scripts do minor quality control and compare subsets of intron containing genes within and between experimental conditions.\
 The experimental condition, and two-batch correction, are currently hard coded into the scripts.\
-Hence, at this time this pipeline require a substantial rewrite to be generalized.
+Hence, at this time the pipeline would require a substantial rewrite to be generalized.
 
 ### The following folders and files need to be created or made available.
 
