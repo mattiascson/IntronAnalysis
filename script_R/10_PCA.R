@@ -25,7 +25,7 @@ NOSamples <- dim(AllIntronGenes)[2]-3
 PrepClust %<>% slice(match(names(GeneTibble[,3:(NOSamples+2)]),PrepClust[["Sample"]]))
 
 #Restructure/transpose data
-AllIntronGenes %>% select(where(is.numeric) & !LengthDiff)
+AllIntronGenes %>% select(where(is.numeric) & !LengthDiff) %>% t(.) %>% rownames(.)
 
 #Set saved image	(8.27x11.69
 #png(file=paste("./Outpng/", Date,"_med9-vs-Wt_2h4h6h-0h.png",sep=""), width=11.69, height=7.27, units="in", res=100)
